@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <!-- Tailwind CSSの読み込み -->
+    <script src="https://jsdelivr.net"></script>
+</head>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen text-slate-800 font-sans p-4">
+
+    <!-- メインカード -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-slate-100">
+        <h1 class="text-2xl font-bold text-indigo-600 mb-2">{{ title }}</h1>
+        <p class="text-slate-500 mb-6">{{ message }}</p>
+
+        <div class="bg-slate-50 p-4 rounded-xl mb-6">
+            <h2 class="text-sm font-semibold text-slate-700 mb-2">💡 この構成の特徴</h2>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                <li>HTMLを自由に記述可能</li>
+                <li>Tailwind CSSでデザインが綺麗</li>
+                <li>main.py だけでAPIと画面が両立</li>
+            </ul>
+        </div>
+
+        <!-- APIテスト用のボタンと結果表示エリア -->
+        <button onclick="fetchApiData()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl transition duration-200 cursor-pointer text-sm">
+            内蔵APIを呼び出す
+        </button>
+
+        <div id="api-result" class="mt-4 p-3 bg-emerald-50 border border-emerald-100 text-emerald-800 text-xs rounded-xl font-mono hidden whitespace-pre-wrap">
+            <!-- ここにAPIの結果が表示されます -->
+        </div>
+    </div>
+
+    <!-- APIを叩く簡単なJavaScript -->
+    <script>
+        async function fetchApiData() {
+            try {
+                const response = await fetch('/api/info');
+                const data = await response.json();
+                const resultDiv = document.getElementById('api-result');
+                
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.classList.remove('hidden');
+            } catch (error) {
+                alert('APIの呼び出しに失敗しました');
+            }
+        }
+    </script>
+</body>
+</html>
