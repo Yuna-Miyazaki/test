@@ -10,15 +10,17 @@ templates = Jinja2Templates(directory="templates")
 
 
 # 1. 画面を表示するルーティング（ブラウザでアクセス）
+# 1. 画面を表示するルーティング（修正版）
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    # index.htmlに渡したいデータを辞書型で指定
-    context = {
-        "request": request,
-        "title": "FastAPI ✕ Tailwind サンプル",
-        "message": "Renderへようこそ！",
-    }
-    return templates.TemplateResponse("index.html", context)
+    return templates.TemplateResponse(
+        request=request, 
+        name="index.html", 
+        context={
+            "title": "FastAPI ✕ Tailwind サンプル",
+            "message": "Renderへようこそ！"
+        }
+    )
 
 
 # 2. APIエンドポイント（データをJSON形式で返す）
